@@ -96,9 +96,6 @@ productoria' (x:xs) n = n x * (productoria' xs n)
 
 -- Ejercicio 5
 
---paratodo1 :: [Bool] -> Bool
---paratodo1 xs = paratodo' xs (==True)
-
 paratodo1 :: [Bool] -> Bool
 paratodo1 xs = paratodo' xs id
 
@@ -195,4 +192,30 @@ primIgualesA a (x:xs) | a == x = x : (primIgualesA a xs)
 -- Ejercicio 10.b
 
 primIgualesA' :: Eq(a) => a -> [a] -> [a]
-primIgualesA' a (x:xs)
+primIgualesA' a xs = takeWhile (==a) xs
+
+
+
+
+
+--Ejercicio 11.a
+
+primIguales :: Eq(a) => [a] -> [a]
+primIguales [] = []
+primIguales [y] = [y]
+primIguales (y:(x:xs)) | (y == x) = y : (primIguales (x:xs))
+                       | (y /= x) = [y]
+
+
+--Ejercicio 11.b
+ 
+primIguales' :: Eq(a) => [a] -> [a]
+primIguales' (x:xs) = primIgualesA x (x:xs)
+
+
+
+--Ejercicio 12
+
+cuantGen :: (b -> b -> b) -> b -> [a] -> (a -> b) -> b
+cuantGen _ z [] _ = z
+cuantGen op z (x:xs) t = op (t x) (cuantGen op z xs t)
