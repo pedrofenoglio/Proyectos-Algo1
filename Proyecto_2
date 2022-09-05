@@ -1,24 +1,36 @@
--- ejercicio 1
+-- Ejercicio 1
 
 data Carrera = Matemática | Física | Computación | Astronomía
-        deriving Eq
 
 título :: Carrera -> String
-título d | d == Matemática = "Licenciatura en Matemática"
-         | d == Física = "Licenciatura en Física"
-         | d == Computación = "Licenciatura en ciencias de la computación"
-         | d == Astronomía = "Licenciatura en Astronomía"
+título Matemática = "Licenciatura en Matemática"
+título Física = "Licenciatura en Física"
+título Computación = "Licenciatura en ciencias de la computación"
+título Astronomía = "Licenciatura en Astronomía"
  
 
-data NotaBásica = Do | Re | Mi | Fa | Sol | La | Si
-        deriving Eq 
+data NotaBásica = Do | Re | Mi | Fa | Sol | La | Si 
+    deriving (Eq, Ord, Show)
+
+                
 
 cifradoAmericano :: NotaBásica -> Char
-cifradoAmericano a | a == Do = 'C'
-                   | a == Re = 'D'
-                   | a == Mi = 'E'
-                   | a == Fa = 'F'
-                   | a == Sol = 'G'
-                   | a == La = 'A'
-                   | a == Si = 'B'
-    
+cifradoAmericano Do = 'C'
+cifradoAmericano Re = 'D'
+cifradoAmericano Mi = 'E'
+cifradoAmericano Fa = 'F'
+cifradoAmericano Sol = 'G'
+cifradoAmericano La = 'A'
+cifradoAmericano Si = 'B'
+
+
+-- Ejercicio 3
+
+minimoElemento :: Ord a => [a] -> a 
+minimoElemento xs = minimum xs
+
+minimoElemento' :: Bounded a => Ord a => [a] -> a
+minimoElemento' [] = maxBound
+minimoElemento' (x:xs) = min x (minimoElemento' xs) 
+-- Sacamos el 3b al final no era tan duro jujuu
+-- me ayudaron los pibes de al lado
