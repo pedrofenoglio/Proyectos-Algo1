@@ -1,20 +1,20 @@
 -- Ejercicio 1
 
-data Carrera = Matemática | Física | Computación | Astronomía
+data Carrera = Matematica | Fisica | Computacion | Astronomia deriving (Eq, Show)
 
-título :: Carrera -> String
-título Matemática = "Licenciatura en Matemática"
-título Física = "Licenciatura en Física"
-título Computación = "Licenciatura en ciencias de la computación"
-título Astronomía = "Licenciatura en Astronomía"
+titulo :: Carrera -> String
+titulo Matematica = "Licenciatura en Matemática"
+titulo Fisica = "Licenciatura en Física"
+titulo Computacion = "Licenciatura en ciencias de la computación"
+titulo Astronomia = "Licenciatura en Astronomía"
  
 
-data NotaBásica = Do | Re | Mi | Fa | Sol | La | Si 
+data NotaBasica = Do | Re | Mi | Fa | Sol | La | Si 
     deriving (Eq, Ord, Show)
 
                 
 
-cifradoAmericano :: NotaBásica -> Char
+cifradoAmericano :: NotaBasica -> Char
 cifradoAmericano Do = 'C'
 cifradoAmericano Re = 'D'
 cifradoAmericano Mi = 'E'
@@ -24,13 +24,51 @@ cifradoAmericano La = 'A'
 cifradoAmericano Si = 'B'
 
 
--- Ejercicio 3
+-- Ejercicio 3.a
 
 minimoElemento :: Ord a => [a] -> a 
 minimoElemento xs = minimum xs
 
+
+--Ejercicio 3.b
+
 minimoElemento' :: Bounded a => Ord a => [a] -> a
 minimoElemento' [] = maxBound
 minimoElemento' (x:xs) = min x (minimoElemento' xs) 
--- Sacamos el 3b al final no era tan duro jujuu
--- me ayudaron los pibes de al lado
+
+
+
+-- Ejercicio 4.a
+
+
+data Cargo = Titular | Asociado | Adjunto | Asistente | Auxiliar deriving Show
+data Area = Administrativa | Ensenanza | Economica | Postgrado deriving Show
+
+
+data Persona = Decano 
+           | Docente Cargo 
+           | NoDocente Area
+           | Estudiante Carrera Ingreso deriving Show
+
+
+type Ingreso = Int 
+
+--Ejercicio 4.b
+
+--Docente :: Cargo -> Persona
+
+--Ejercicio 4.c
+
+mismoCargo:: Cargo -> Cargo -> Bool
+mismoCargo Titular Titular = True
+mismoCargo Asociado Asociado = True
+mismoCargo Adjunto Adjunto = True
+mismoCargo Asistente Asistente = True
+mismoCargo Auxiliar Auxiliar = True
+
+
+
+cuantos_doc :: [Persona] -> Cargo -> Int
+cuantos_doc (Docente c1:xs) c | mismoCargo c c1 = 1 + cuantos_doc xs c
+                              | otherwise =  cuantos_doc xs c
+cuantos_doc (_:xs) c = cuantos_doc xs c
